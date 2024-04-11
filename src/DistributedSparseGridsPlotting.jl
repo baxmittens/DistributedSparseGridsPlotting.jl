@@ -195,7 +195,7 @@ function PlotlyJS.scatter3d(sg::SG, color_order::Bool=false, maxp::Int=1) where 
 	return p
 end
 
-include(joinpath("../support","ndgrid.jl"))
+include(joinpath("./support","ndgrid.jl"))
 function PlotlyJS.surface(asg::SG, npts = 20, postfun=x->x; kwargs...) where {CT,CP<:AbstractCollocationPoint{2,CT},HCP<:AbstractHierarchicalCollocationPoint{2,CP},SG<:AbstractHierarchicalSparseGrid{2,HCP}}
 	pts = range(-1.,stop=1.,length=npts)
 	xpts, ypts = ndgrid(pts,pts)
