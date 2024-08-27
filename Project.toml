@@ -1,13 +1,16 @@
 name = "DistributedSparseGridsPlotting"
 uuid = "548b5689-f04a-429b-874f-be14d81f5589"
 authors = ["baxmittens <maximilian.bittens@bgr.de>"]
-version = "0.0.1"
+version = "0.0.2"
 
 [deps]
 DistributedSparseGrids = "963c640e-cdaa-5978-8b8a-59ae1a680e3d"
 PlotlyJS = "f0f68f2c-4968-5e81-91da-67840de0976a"
 UnicodePlots = "b8865327-cd53-5732-bb35-84acbb429228"
 Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
+Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
+GLMakie = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 
 [compat]
 DistributedSparseGrids = "0.1"

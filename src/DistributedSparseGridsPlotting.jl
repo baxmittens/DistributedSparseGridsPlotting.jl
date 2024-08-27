@@ -1,7 +1,7 @@
 module DistributedSparseGridsPlotting
 
 using DistributedSparseGrids
-import DistributedSparseGrids: AbstractCollocationPoint, AbstractHierarchicalCollocationPoint, AbstractHierarchicalSparseGrid, numlevels, coord, pt_idx
+import DistributedSparseGrids: AbstractCollocationPoint, AbstractHierarchicalCollocationPoint, AbstractHierarchicalSparseGrid, numlevels, coord, pt_idx, i_multi, level, scaling_weight, fval
 using Colors
 import Colors: distinguishable_colors, RGB, N0f8, colormap
 import PlotlyJS
@@ -65,6 +65,7 @@ function PlotlyJS.scatter(sg::SG, lvl_offset::Float64=0.0, offset::Float64=0.0, 
 	end
 	return traces
 end
+
 
 function PlotlyJS.scatter(sg::SG, lvl_offset::Bool=false; kwargs...) where {CT,CP<:AbstractCollocationPoint{1,CT},HCP<:AbstractHierarchicalCollocationPoint{1,CP},SG<:AbstractHierarchicalSparseGrid{1,HCP}}
 	colors = cols = distinguishable_colors(numlevels(sg)+1, [RGB(1,1,1)])[2:end]
@@ -163,6 +164,15 @@ function PlotlyJS.scatter3d(sg::SG, color_order::Bool=false, maxp::Int=1) where 
 	return p
 end
 
+function minval(asg, ppfun)
+	_minval = Inf
+	for cpt in asg
+ 		tmp = ppfun(fval(cpt))
+ 		_minval = min(tmp,_minval)
+ 	end
+ 	return _minval - 0.05*abs(_minval)
+end
+
 function PlotlyJS.scatter3d(sg::SG, color_order::Bool=false, maxp::Int=1) where {CT,CP<:AbstractCollocationPoint{3,CT},HCP<:AbstractHierarchicalCollocationPoint{3,CP},SG<:AbstractHierarchicalSparseGrid{3,HCP}}
 	if color_order
 		colors = cols = colormap("Reds", N*maxp+1)
@@ -257,4 +267,7 @@ function PlotlyJS.surface(fun::F, npts = 20; kwargs...) where {F<:Function}
 	p = PlotlyJS.surface(x=xpts,y=ypts,z=zz; kwargs...)
 end
 
+include("./Makie/makie.jl")
+
+export surface_inplace_ops
 end
