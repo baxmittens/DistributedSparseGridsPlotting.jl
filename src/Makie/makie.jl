@@ -41,9 +41,11 @@ function Makie.scatter!(ax::Axis3, sg::SG; markersize=5, z_offset=0.0) where {CT
 #		colors = cols = colormap("Reds", N*maxp+1)
 	#else	
 	#end
+	mw(i) = markersize-foldl((x,y)->x+2.0/(y),1:i)
 	xvals = Vector{CT}()
 	yvals = Vector{CT}()
 	zvals = Vector{CT}()
+	mws = Vector{CT}()
 	text = Vector{String}()
 	clr = Vector{RGB{N0f8}}()
 	for hcpt in sg
@@ -52,7 +54,8 @@ function Makie.scatter!(ax::Axis3, sg::SG; markersize=5, z_offset=0.0) where {CT
 		push!(zvals,zero(CT)+z_offset*one(CT))
 		push!(text,string(pt_idx(hcpt))*"^"*string(i_multi(hcpt)))
 		#if !color_order
-			push!(clr,colors[level(hcpt)])
+		push!(clr,colors[level(hcpt)])
+		push!(mws, mw(level(hcpt)))
 		#else
 		#
 		#	N = length(children(hcpt))
@@ -63,7 +66,7 @@ function Makie.scatter!(ax::Axis3, sg::SG; markersize=5, z_offset=0.0) where {CT
 		#	push!(clr,colors[ord+1])
 		#end
 	end
-	p = Makie.scatter!(ax, xvals, yvals, zvals, color=clr, markersize=markersize)
+	p = Makie.scatter!(ax, xvals, yvals, zvals, color=clr, markersize=mws)
 	return p
 end
 
