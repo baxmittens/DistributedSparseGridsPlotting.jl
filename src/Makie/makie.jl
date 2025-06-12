@@ -35,13 +35,13 @@ function Makie.scatter!(ax::Axis, sg::SG, markersize=10) where {CT,CP<:AbstractC
 	return nothing
 end
 
-function Makie.scatter!(ax::Axis3, sg::SG; markersize=5, z_offset=0.0) where {CT,CP<:AbstractCollocationPoint{2,CT},HCP<:AbstractHierarchicalCollocationPoint{2,CP},SG<:AbstractHierarchicalSparseGrid{2,HCP}}
+function Makie.scatter!(ax::Axis3, sg::SG; markersize::Int=5, z_offset=0.0) where {CT,CP<:AbstractCollocationPoint{2,CT},HCP<:AbstractHierarchicalCollocationPoint{2,CP},SG<:AbstractHierarchicalSparseGrid{2,HCP}}
 	colors = cols = distinguishable_colors(numlevels(sg)+1, [RGB(1,1,1)])[2:end]
 	#if color_order
 #		colors = cols = colormap("Reds", N*maxp+1)
 	#else	
 	#end
-	mw(i) = markersize-foldl((x,y)->x+2.0/(y),1:i)
+	#mw(i) = markersize-foldl((x,y)->x+2.0/(y),1:i)
 	xvals = Vector{CT}()
 	yvals = Vector{CT}()
 	zvals = Vector{CT}()
@@ -55,7 +55,7 @@ function Makie.scatter!(ax::Axis3, sg::SG; markersize=5, z_offset=0.0) where {CT
 		push!(text,string(pt_idx(hcpt))*"^"*string(i_multi(hcpt)))
 		#if !color_order
 		push!(clr,colors[level(hcpt)])
-		push!(mws, mw(level(hcpt)))
+		#push!(mws, mw(level(hcpt)))
 		#else
 		#
 		#	N = length(children(hcpt))
@@ -66,7 +66,7 @@ function Makie.scatter!(ax::Axis3, sg::SG; markersize=5, z_offset=0.0) where {CT
 		#	push!(clr,colors[ord+1])
 		#end
 	end
-	p = Makie.scatter!(ax, xvals, yvals, zvals, color=clr, markersize=mws)
+	p = Makie.scatter!(ax, xvals, yvals, zvals, color=clr, markersize=markersize)
 	return p
 end
 

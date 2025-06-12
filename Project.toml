@@ -14,13 +14,13 @@ CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 
 [compat]
 DistributedSparseGrids = "0.1"
-PlotlyJS = "0.18"
+PlotlyJS = "^0"
 UnicodePlots = "3"
 Colors = "0.12"
 julia = "1"
 Makie = "0"
-CairoMakie = "^0.12"
-GLMakie = "^0.10"
+CairoMakie = "^0"
+GLMakie = "^0"
 
 
 [extras]
